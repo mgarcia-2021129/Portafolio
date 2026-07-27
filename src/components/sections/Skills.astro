@@ -1,0 +1,15 @@
+---
+import Reveal from '../react/Reveal';
+import SectionHeading from '../ui/SectionHeading.astro';
+import SkillsOrbit from '../react/SkillsOrbit';
+---
+
+<section class="section-shell py-20 sm:py-28" id="habilidades" aria-labelledby="skills-titulo">
+  <Reveal client:load variant="mask">
+    <SectionHeading id="skills-titulo" title="Habilidades" />
+  </Reveal>
+
+  <Reveal client:load delay={0.12} variant="rise">
+    <SkillsOrbit client:load />
+  </Reveal>
+</section>

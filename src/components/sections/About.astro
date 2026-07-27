@@ -1,0 +1,37 @@
+---
+import Reveal from '../react/Reveal';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { profile } from '../../data/profile';
+
+const cards = [
+  { title: '¿Quién soy?', body: profile.about.whoIAm },
+  { title: 'Objetivo profesional', body: profile.about.goal },
+  { title: 'Lo que me diferencia', body: profile.about.difference },
+];
+---
+
+<section class="section-shell py-20 sm:py-28" id="sobre-mi" aria-labelledby="sobre-titulo">
+  <Reveal client:load variant="mask">
+    <SectionHeading id="sobre-titulo" eyebrow="Sobre mí" title={profile.role} />
+  </Reveal>
+
+  <div class="grid gap-5 lg:grid-cols-3">
+    {
+      cards.map((card, index) => (
+        <Reveal
+          client:load
+          delay={0.15 * index}
+          variant={index === 0 ? 'slide-left' : index === 2 ? 'slide-right' : 'card'}
+        >
+          <article class="glass-panel h-full p-6 sm:p-7">
+            <div class="relative z-10">
+              <div class="mb-5 h-px w-12 bg-gradient-to-r from-accent to-transparent" />
+              <h3 class="font-display text-xl font-semibold text-ink">{card.title}</h3>
+              <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">{card.body}</p>
+            </div>
+          </article>
+        </Reveal>
+      ))
+    }
+  </div>
+</section>

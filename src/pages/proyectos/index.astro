@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Reveal from '../../components/react/Reveal';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import ProjectCard from '../../components/projects/ProjectCard.astro';
+import { projects } from '../../data/projects';
+import { site } from '../../data/site';
+---
+
+<BaseLayout
+  title={`Proyectos · ${site.shortName}`}
+  description="Todos los proyectos de Manuel Antonio Garcia Juárez: sistemas bancarios, plataformas académicas, gestión comercial y salud."
+>
+  <section class="section-shell pb-24 pt-28 sm:pb-32 sm:pt-36">
+    <Reveal client:load variant="mask">
+      <SectionHeading title="Proyectos" />
+    </Reveal>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      {
+        projects.map((project, index) => (
+          <Reveal client:load delay={0.14 * index} variant="zoom">
+            <ProjectCard
+              href={`/proyectos/${project.slug}`}
+              title={project.name}
+              description={project.shortDescription}
+              image={project.cover}
+            />
+          </Reveal>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

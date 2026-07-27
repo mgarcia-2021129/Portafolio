@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Reveal from '../../components/react/Reveal';
+import ParallaxImage from '../../components/react/ParallaxImage';
+import GlassButton from '../../components/ui/GlassButton.astro';
+import { getProjectBySlug, projects } from '../../data/projects';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const project = getProjectBySlug(slug!);
+
+if (!project) {
+  return Astro.redirect('/proyectos');
+}
+---
+
+<BaseLayout
+  title={`${project.name} · ${site.shortName}`}
+  description={project.shortDescription}
+>
+  <article class="section-shell pb-24 pt-28 sm:pb-32 sm:pt-36">
+    <Reveal client:load variant="rise">
+      <div class="mb-8">
+        <a href="/proyectos" class="text-sm text-ink/55 transition-colors hover:text-accent">
+          ← Volver a proyectos
+        </a>
+      </div>
+    </Reveal>
+
+    <Reveal client:load variant="zoom">
+      <div class="glass-panel overflow-hidden">
+        <ParallaxImage
+          client:load
+          src={project.cover}
+          alt={`Portada de ${project.name}`}
+          className="relative aspect-[16/9]"
+        />
+        <div class="relative z-10 space-y-5 p-6 sm:p-10">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
+              {project.status}
+            </span>
+          </div>
+          <h1 class="font-display text-3xl font-bold tracking-tight text-ink sm:text-5xl text-balance">
+            {project.name}
+          </h1>
+          <p class="max-w-3xl text-base leading-relaxed text-ink/65 sm:text-lg">
+            {project.description}
+          </p>
+          <div class="pt-2">
+            <GlassButton href={project.repository} external>Ver repositorio</GlassButton>
+          </div>
+        </div>
+      </div>
+    </Reveal>
+
+    <div class="mt-8 grid gap-5 lg:grid-cols-2">
+      <Reveal client:load delay={0.1} variant="slide-left">
+        <section class="glass-panel h-full p-6 sm:p-8">
+          <div class="relative z-10">
+            <h2 class="font-display text-xl font-semibold text-ink">Mi rol</h2>
+            <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">{project.role}</p>
+          </div>
+        </section>
+      </Reveal>
+      <Reveal client:load delay={0.2} variant="slide-right">
+        <section class="glass-panel h-full p-6 sm:p-8">
+          <div class="relative z-10">
+            <h2 class="font-display text-xl font-semibold text-ink">Aprendí</h2>
+            <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
+              {project.learned}
+            </p>
+          </div>
+        </section>
+      </Reveal>
+    </div>
+
+    <Reveal client:load delay={0.12} variant="rise">
+      <section class="glass-panel mt-5 p-6 sm:p-8">
+        <div class="relative z-10">
+          <h2 class="font-display text-xl font-semibold text-ink">Tecnologías</h2>
+          <ul class="mt-5 flex flex-wrap gap-2">
+            {
+              project.technologies.map((tech) => (
+                <li class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm text-ink/80">
+                  {tech}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+    </Reveal>
+
+    <Reveal client:load delay={0.16} variant="rise">
+      <section class="glass-panel mt-5 p-6 sm:p-8">
+        <div class="relative z-10">
+          <h2 class="font-display text-xl font-semibold text-ink">
+            Características principales
+          </h2>
+          <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+            {
+              project.features.map((feature) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-ink/70 sm:text-base">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                  <span>{feature}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+    </Reveal>
+
+    {
+      project.gallery.length > 0 && (
+        <Reveal client:load delay={0.18} variant="mask">
+          <section class="mt-10">
+            <h2 class="mb-5 font-display text-xl font-semibold text-ink">Galería</h2>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {project.gallery.map((image, index) => (
+                <div class="glass-panel overflow-hidden p-2">
+                  <ParallaxImage
+                    client:load
+                    src={image}
+                    alt={`${project.name} — imagen ${index + 1}`}
+                    className="aspect-[4/3] rounded-[1.05rem]"
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+        </Reveal>
+      )
+    }
+  </article>
+</BaseLayout>

@@ -1,0 +1,53 @@
+---
+import Reveal from '../react/Reveal';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { profile } from '../../data/profile';
+
+const items = [
+  {
+    label: 'Empleo formal',
+    value: profile.experience.employed ? 'Sí' : 'Aún no',
+  },
+  {
+    label: 'Prácticas',
+    value: profile.experience.internship,
+  },
+  {
+    label: 'Proyectos para clientes',
+    value: profile.experience.clientWork,
+  },
+  {
+    label: 'Hackathones',
+    value: profile.experience.hackathons ? 'Participación activa' : 'No',
+  },
+  {
+    label: 'Trabajo en equipo',
+    value: profile.experience.teamwork
+      ? 'Colaboración en equipos de desarrollo'
+      : 'No',
+  },
+];
+---
+
+<section class="section-shell py-20 sm:py-28" id="experiencia" aria-labelledby="exp-titulo">
+  <Reveal client:load variant="mask">
+    <SectionHeading id="exp-titulo" title="Experiencia" />
+  </Reveal>
+
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      items.map((item, index) => (
+        <Reveal client:load delay={0.14 * index} variant="card">
+          <article class="glass-panel h-full p-6">
+            <div class="relative z-10">
+              <p class="text-xs uppercase tracking-[0.16em] text-accent/80">{item.label}</p>
+              <p class="mt-3 font-display text-lg font-semibold leading-snug text-ink">
+                {item.value}
+              </p>
+            </div>
+          </article>
+        </Reveal>
+      ))
+    }
+  </div>
+</section>

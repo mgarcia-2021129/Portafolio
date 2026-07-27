@@ -1,0 +1,35 @@
+---
+import Reveal from '../react/Reveal';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ProjectCard from '../projects/ProjectCard.astro';
+import GlassButton from '../ui/GlassButton.astro';
+import { getFeaturedProjects } from '../../data/projects';
+
+const featured = getFeaturedProjects();
+---
+
+<section class="section-shell py-20 sm:py-28" id="proyectos" aria-labelledby="proy-titulo">
+  <div class="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+    <Reveal client:load variant="mask">
+      <SectionHeading id="proy-titulo" title="Proyectos destacados" />
+    </Reveal>
+    <Reveal client:load variant="rise" delay={0.15}>
+      <GlassButton href="/proyectos">Ver todos</GlassButton>
+    </Reveal>
+  </div>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    {
+      featured.map((project, index) => (
+        <Reveal client:load delay={0.14 * index} variant="zoom">
+          <ProjectCard
+            href={`/proyectos/${project.slug}`}
+            title={project.name}
+            image={project.cover}
+            compact
+          />
+        </Reveal>
+      ))
+    }
+  </div>
+</section>

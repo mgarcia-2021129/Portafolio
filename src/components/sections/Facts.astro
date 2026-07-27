@@ -1,0 +1,38 @@
+---
+import Reveal from '../react/Reveal';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { profile } from '../../data/profile';
+
+const facts = [
+  { label: 'Nombre', value: profile.fullName },
+  { label: 'Edad', value: `${profile.age} años` },
+  { label: 'Ubicación', value: profile.location },
+  { label: 'Experiencia', value: `${profile.yearsProgramming} años programando` },
+  {
+    label: 'Estudios',
+    value: `${profile.studying.program} · ${profile.studying.year}`,
+  },
+  { label: 'Institución', value: profile.studying.institution },
+];
+---
+
+<section class="section-shell py-20 sm:py-28" id="datos" aria-labelledby="datos-titulo">
+  <Reveal client:load variant="mask">
+    <SectionHeading id="datos-titulo" title="Datos generales" />
+  </Reveal>
+
+  <Reveal client:load delay={0.18} variant="rise">
+    <div class="glass-panel grid gap-px overflow-hidden sm:grid-cols-2 lg:grid-cols-3">
+      {
+        facts.map((fact) => (
+          <div class="relative bg-canvas/40 p-6 backdrop-blur-xl sm:p-7">
+            <p class="text-xs uppercase tracking-[0.16em] text-ink/45">{fact.label}</p>
+            <p class="mt-3 font-display text-base font-semibold leading-snug text-ink sm:text-lg">
+              {fact.value}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </Reveal>
+</section>

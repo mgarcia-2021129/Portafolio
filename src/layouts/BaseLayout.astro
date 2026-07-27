@@ -1,0 +1,52 @@
+---
+import '../styles/global.css';
+import { site } from '../data/site';
+import Navbar from '../components/react/Navbar';
+import CursorGlow from '../components/react/CursorGlow';
+import AmbientBackground from '../components/AmbientBackground.astro';
+import SmoothScroll from '../components/react/SmoothScroll';
+import 'lenis/dist/lenis.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = `${site.name} · ${site.title}`, description = site.description } =
+  Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com');
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0A0A0F" />
+    <link rel="canonical" href={canonical} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <title>{title}</title>
+  </head>
+  <body class="relative min-h-screen">
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-canvas"
+    >
+      Saltar al contenido
+    </a>
+    <SmoothScroll client:idle />
+    <AmbientBackground />
+    <CursorGlow client:idle />
+    <Navbar client:load pathname={Astro.url.pathname} />
+    <main id="contenido" class="relative z-10">
+      <slot />
+    </main>
+  </body>
+</html>
