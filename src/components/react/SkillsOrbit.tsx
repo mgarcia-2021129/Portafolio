@@ -5,13 +5,18 @@ import {
   useReducedMotion,
 } from 'framer-motion';
 import { useMemo, useRef, useState } from 'react';
-import {
-  skillCategories,
-  skills,
-  skillSlug,
-  type Skill,
-  type SkillCategory,
-} from '../../data/skills';
+import type { Skill, SkillGroup } from '../../types/content';
+
+type Props = { skills: Skill[] };
+
+function skillSlug(name: string) {
+  return name
+    .toLowerCase()
+    .replace(/\+/g, 'plus')
+    .replace(/\.+/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -117,7 +122,7 @@ function SkillCard({
               <p className="font-display text-lg font-semibold tracking-tight text-ink">
                 {skill.name}
               </p>
-              <p className="mt-1 text-sm text-ink/55">{skill.category}</p>
+              <p className="mt-1 text-sm text-ink/55">{skill.group}</p>
             </div>
             <motion.span
               className="font-display text-sm font-bold text-accent"
@@ -141,8 +146,11 @@ function SkillCard({
   );
 }
 
-export default function SkillsOrbit() {
-  const [activeCategory, setActiveCategory] = useState<SkillCategory | 'Todas'>(
+export default function SkillsOrbit({ skills }: Props) {
+  const skillCategories: SkillGroup[] = Array.from(
+    new Set(skills.map((skill) => skill.group)),
+  );
+  const [activeCategory, setActiveCategory] = useState<SkillGroup | 'Todas'>(
     'Todas',
   );
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -151,7 +159,7 @@ export default function SkillsOrbit() {
 
   const filtered = useMemo(() => {
     if (activeCategory === 'Todas') return skills;
-    return skills.filter((skill) => skill.category === activeCategory);
+    return skills.filter((skill) => skill.group === activeCategory);
   }, [activeCategory]);
 
   return (

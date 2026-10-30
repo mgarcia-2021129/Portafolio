@@ -4,8 +4,6 @@ import { site } from '../data/site';
 import Navbar from '../components/react/Navbar';
 import CursorGlow from '../components/react/CursorGlow';
 import AmbientBackground from '../components/AmbientBackground.astro';
-import SmoothScroll from '../components/react/SmoothScroll';
-import 'lenis/dist/lenis.css';
 
 interface Props {
   title?: string;
@@ -41,7 +39,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://example.com
     >
       Saltar al contenido
     </a>
-    <SmoothScroll client:idle />
     <AmbientBackground />
     <CursorGlow client:idle />
     <Navbar client:load pathname={Astro.url.pathname} />

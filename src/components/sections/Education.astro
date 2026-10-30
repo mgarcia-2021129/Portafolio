@@ -1,7 +1,12 @@
 ---
 import Reveal from '../react/Reveal';
 import SectionHeading from '../ui/SectionHeading.astro';
-import { profile } from '../../data/profile';
+import { getCollection } from 'astro:content';
+
+const education = (await getCollection('education')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const pending = 'Pendiente';
 ---
 
 <section class="section-shell py-20 sm:py-28" id="educacion" aria-labelledby="edu-titulo">
@@ -9,30 +14,20 @@ import { profile } from '../../data/profile';
     <SectionHeading id="edu-titulo" title="Educación" />
   </Reveal>
 
-  <Reveal client:load delay={0.12} variant="rise">
-    <div class="mb-8 flex flex-wrap gap-3">
-      {
-        profile.educationSchools.map((school) => (
-          <div class="glass-panel px-4 py-3 text-sm">
-            <span class="relative z-10 text-ink/50">{school.stage}: </span>
-            <span class="relative z-10 font-medium text-ink">{school.institution}</span>
-          </div>
-        ))
-      }
-    </div>
-  </Reveal>
-
   <div class="relative space-y-5 before:absolute before:bottom-4 before:left-[1.15rem] before:top-4 before:w-px before:bg-gradient-to-b before:from-accent/50 before:via-glass-edge before:to-transparent sm:before:left-[1.35rem]">
     {
-      profile.educationYears.map((item, index) => (
+      education.map(({ data }, index) => (
         <Reveal client:load delay={0.14 * index} variant="slide-left">
           <article class="relative grid gap-4 sm:grid-cols-[2.7rem_1fr] sm:gap-6">
             <div class="relative z-10 mt-6 hidden h-3 w-3 rounded-full bg-accent shadow-glow sm:block" />
             <div class="glass-panel p-6 sm:p-8">
               <div class="relative z-10">
-                <h3 class="font-display text-xl font-semibold text-ink">{item.year}</h3>
+                <h3 class="font-display text-xl font-semibold text-ink">{data.stage}</h3>
+                <p class="mt-2 text-sm text-ink/55">
+                  {data.institution} · {data.program ?? pending} · {data.dates ?? pending}
+                </p>
                 <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
-                  {item.summary}
+                  {data.description ?? pending}
                 </p>
               </div>
             </div>

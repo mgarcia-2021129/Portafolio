@@ -1,0 +1,21 @@
+{
+  "items": [
+    { "name": "Java", "group": "Lenguajes", "level": 80, "icon": "/images/skills/java.svg" },
+    { "name": "C#", "group": "Lenguajes", "level": 80, "icon": "/images/skills/csharp.svg" },
+    { "name": "JavaScript", "group": "Lenguajes", "level": 85, "icon": "/images/skills/javascript.svg" },
+    { "name": "HTML", "group": "Lenguajes", "level": 75, "icon": "/images/skills/html.svg" },
+    { "name": "CSS", "group": "Lenguajes", "level": 60, "icon": "/images/skills/css.svg" },
+    { "name": "Java EE", "group": "Frameworks y plataformas", "level": 65, "icon": "/images/skills/javaee.svg" },
+    { "name": "Spring Boot", "group": "Frameworks y plataformas", "level": 50, "icon": "/images/skills/spring.svg" },
+    { "name": ".NET", "group": "Frameworks y plataformas", "level": 75, "icon": "/images/skills/dotnet.svg" },
+    { "name": "Node.js", "group": "Frameworks y plataformas", "level": 85, "icon": "/images/skills/nodejs.svg" },
+    { "name": "React", "group": "Frameworks y plataformas", "level": 80, "icon": "/images/skills/react.svg" },
+    { "name": "Bootstrap", "group": "Frameworks y plataformas", "level": 65, "icon": "/images/skills/bootstrap.svg" },
+    { "name": "MySQL", "group": "Bases de datos", "level": 85, "icon": "/images/skills/mysql.svg" },
+    { "name": "MongoDB", "group": "Bases de datos", "level": 80, "icon": "/images/skills/mongodb.svg" },
+    { "name": "Postgres", "group": "Bases de datos", "level": 65, "icon": "/images/skills/postgres.svg" },
+    { "name": "Git", "group": "Herramientas", "level": 75, "icon": "/images/skills/git.svg" },
+    { "name": "GitHub", "group": "Herramientas", "level": 80, "icon": "/images/skills/github.svg" },
+    { "name": "Docker", "group": "Herramientas", "level": 70, "icon": "/images/skills/docker.svg" }
+  ]
+}

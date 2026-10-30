@@ -3,9 +3,11 @@ import Reveal from '../react/Reveal';
 import SectionHeading from '../ui/SectionHeading.astro';
 import ProjectCard from '../projects/ProjectCard.astro';
 import GlassButton from '../ui/GlassButton.astro';
-import { getFeaturedProjects } from '../../data/projects';
+import { getCollection } from 'astro:content';
 
-const featured = getFeaturedProjects();
+const featured = (await getCollection('projects', ({ data }) => data.featured)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <section class="section-shell py-20 sm:py-28" id="proyectos" aria-labelledby="proy-titulo">
@@ -14,7 +16,7 @@ const featured = getFeaturedProjects();
       <SectionHeading id="proy-titulo" title="Proyectos destacados" />
     </Reveal>
     <Reveal client:load variant="rise" delay={0.15}>
-      <GlassButton href="/proyectos">Ver todos</GlassButton>
+    <GlassButton href="/projects">Ver todos</GlassButton>
     </Reveal>
   </div>
 
@@ -23,9 +25,9 @@ const featured = getFeaturedProjects();
       featured.map((project, index) => (
         <Reveal client:load delay={0.14 * index} variant="zoom">
           <ProjectCard
-            href={`/proyectos/${project.slug}`}
-            title={project.name}
-            image={project.cover}
+              href={`/projects/${project.slug}`}
+              title={project.data.name}
+              image={project.data.cover}
             compact
           />
         </Reveal>

@@ -4,6 +4,10 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
+  redirects: {
+    '/proyectos': '/projects',
+    '/proyectos/[slug]': '/projects/[slug]',
+  },
   compressHTML: true,
   prefetch: {
     prefetchAll: true,

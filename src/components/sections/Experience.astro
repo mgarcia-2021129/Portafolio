@@ -1,32 +1,12 @@
 ---
 import Reveal from '../react/Reveal';
 import SectionHeading from '../ui/SectionHeading.astro';
-import { profile } from '../../data/profile';
+import { getCollection } from 'astro:content';
 
-const items = [
-  {
-    label: 'Empleo formal',
-    value: profile.experience.employed ? 'Sí' : 'Aún no',
-  },
-  {
-    label: 'Prácticas',
-    value: profile.experience.internship,
-  },
-  {
-    label: 'Proyectos para clientes',
-    value: profile.experience.clientWork,
-  },
-  {
-    label: 'Hackathones',
-    value: profile.experience.hackathons ? 'Participación activa' : 'No',
-  },
-  {
-    label: 'Trabajo en equipo',
-    value: profile.experience.teamwork
-      ? 'Colaboración en equipos de desarrollo'
-      : 'No',
-  },
-];
+const experiences = (await getCollection('experience')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const pending = 'Pendiente';
 ---
 
 <section class="section-shell py-20 sm:py-28" id="experiencia" aria-labelledby="exp-titulo">
@@ -34,16 +14,42 @@ const items = [
     <SectionHeading id="exp-titulo" title="Experiencia" />
   </Reveal>
 
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="grid gap-4 sm:grid-cols-2">
     {
-      items.map((item, index) => (
+      experiences.map(({ data }, index) => (
         <Reveal client:load delay={0.14 * index} variant="card">
           <article class="glass-panel h-full p-6">
             <div class="relative z-10">
-              <p class="text-xs uppercase tracking-[0.16em] text-accent/80">{item.label}</p>
-              <p class="mt-3 font-display text-lg font-semibold leading-snug text-ink">
-                {item.value}
+              <p class="text-xs uppercase tracking-[0.16em] text-accent/80">
+                {data.kind === 'internship' ? 'Prácticas profesionales' : data.kind}
               </p>
+              <p class="mt-3 font-display text-lg font-semibold leading-snug text-ink">
+                {data.org}
+              </p>
+              <dl class="mt-4 grid gap-2 text-sm text-ink/65">
+                <div>
+                  <dt class="inline">Cargo: </dt>
+                  <dd class="inline">{data.role ?? pending}</dd>
+                </div>
+                <div>
+                  <dt class="inline">Fechas: </dt>
+                  <dd class="inline">{data.dates ?? pending}</dd>
+                </div>
+                <div>
+                  <dt class="inline">Descripción: </dt>
+                  <dd class="inline">{data.description ?? pending}</dd>
+                </div>
+                <div>
+                  <dt class="inline">Responsabilidades: </dt>
+                  <dd class="inline">
+                    {data.responsibilities?.join(', ') ?? pending}
+                  </dd>
+                </div>
+                <div>
+                  <dt class="inline">Tecnologías: </dt>
+                  <dd class="inline">{data.tech?.join(', ') ?? pending}</dd>
+                </div>
+              </dl>
             </div>
           </article>
         </Reveal>

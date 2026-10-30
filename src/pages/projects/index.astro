@@ -1,15 +1,19 @@
----
+﻿---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Reveal from '../../components/react/Reveal';
 import SectionHeading from '../../components/ui/SectionHeading.astro';
 import ProjectCard from '../../components/projects/ProjectCard.astro';
-import { projects } from '../../data/projects';
+import { getCollection } from 'astro:content';
 import { site } from '../../data/site';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <BaseLayout
   title={`Proyectos · ${site.shortName}`}
-  description="Todos los proyectos de Manuel Antonio Garcia Juárez: sistemas bancarios, plataformas académicas, gestión comercial y salud."
+  description="Todos los proyectos de Manuel Antonio García Juárez: sistemas bancarios, plataformas académicas, gestión comercial y salud."
 >
   <section class="section-shell pb-24 pt-28 sm:pb-32 sm:pt-36">
     <Reveal client:load variant="mask">
@@ -21,10 +25,10 @@ import { site } from '../../data/site';
         projects.map((project, index) => (
           <Reveal client:load delay={0.14 * index} variant="zoom">
             <ProjectCard
-              href={`/proyectos/${project.slug}`}
-              title={project.name}
-              description={project.shortDescription}
-              image={project.cover}
+              href={`/projects/${project.slug}`}
+              title={project.data.name}
+              description={project.data.shortDescription}
+              image={project.data.cover}
             />
           </Reveal>
         ))

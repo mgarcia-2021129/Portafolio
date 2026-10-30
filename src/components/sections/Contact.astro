@@ -1,7 +1,11 @@
 ---
 import Reveal from '../react/Reveal';
 import SectionHeading from '../ui/SectionHeading.astro';
-import { contact } from '../../data/site';
+import { getCollection } from 'astro:content';
+
+const contactEntry = (await getCollection('contact'))[0];
+if (!contactEntry) throw new Error('Falta la entrada de contenido contact/contact.');
+const contact = contactEntry.data;
 
 const channels = [
   {
@@ -86,7 +90,7 @@ const channels = [
 
 <footer class="section-shell border-t border-white/5 py-10">
   <div class="flex flex-col gap-3 text-sm text-ink/45 sm:flex-row sm:items-center sm:justify-between">
-    <p>© {new Date().getFullYear()} Manuel Antonio Garcia Juárez</p>
+    <p>© {new Date().getFullYear()} Manuel Antonio García Juárez</p>
     <p>Desarrollador Full Stack · Guatemala</p>
   </div>
 </footer>

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useState } from 'react';
-import { navLinks } from '../../data/site';
+import { cv, navLinks } from '../../data/site';
 
 type Props = {
   pathname: string;
@@ -87,6 +87,11 @@ export default function Navbar({ pathname }: Props) {
                 </li>
               ))}
             </ul>
+            {cv.available && (
+              <a href={cv.href} download className="relative z-10 text-sm font-medium">
+                Descargar CV
+              </a>
+            )}
           </nav>
         </motion.header>
       )}

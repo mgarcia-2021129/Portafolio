@@ -2,6 +2,11 @@
 import Reveal from '../react/Reveal';
 import SectionHeading from '../ui/SectionHeading.astro';
 import SkillsOrbit from '../react/SkillsOrbit';
+import { getCollection } from 'astro:content';
+
+const skillsEntry = (await getCollection('skills'))[0];
+if (!skillsEntry) throw new Error('Falta la entrada de contenido skills/skills.');
+const skills = skillsEntry.data.items;
 ---
 
 <section class="section-shell py-20 sm:py-28" id="habilidades" aria-labelledby="skills-titulo">
@@ -10,6 +15,6 @@ import SkillsOrbit from '../react/SkillsOrbit';
   </Reveal>
 
   <Reveal client:load delay={0.12} variant="rise">
-    <SkillsOrbit client:load />
+    <SkillsOrbit client:load skills={skills} />
   </Reveal>
 </section>

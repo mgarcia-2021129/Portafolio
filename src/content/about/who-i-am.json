@@ -1,0 +1,6 @@
+{
+  "key": "who-i-am",
+  "title": "¿Quién soy?",
+  "body": "Me dedico al desarrollo de software. Construyo aplicaciones web y móviles de extremo a extremo: manejo la lógica y las bases de datos en el backend, diseño la interfaz en el frontend y me aseguro de que todo funcione correctamente al desplegarlo en producción.",
+  "order": 1
+}

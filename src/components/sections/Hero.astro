@@ -1,7 +1,11 @@
 ---
 import Reveal from '../react/Reveal';
 import GlassButton from '../ui/GlassButton.astro';
-import { profile } from '../../data/profile';
+import { getEntry } from 'astro:content';
+
+const profileEntry = await getEntry('profile', 'site');
+if (!profileEntry) throw new Error('Falta la entrada de contenido profile/site.');
+const profile = profileEntry.data;
 ---
 
 <section class="section-shell relative pb-20 pt-28 sm:pb-28 sm:pt-36" id="inicio" aria-labelledby="hero-name">
@@ -32,7 +36,7 @@ import { profile } from '../../data/profile';
       </Reveal>
       <Reveal client:load variant="rise" delay={0.52}>
         <div class="flex flex-wrap gap-3 pt-2">
-          <GlassButton href="/proyectos">Ver proyectos</GlassButton>
+          <GlassButton href="/projects">Ver proyectos</GlassButton>
           <GlassButton href="/#contacto" variant="ghost">Contactar</GlassButton>
         </div>
       </Reveal>
@@ -45,7 +49,7 @@ import { profile } from '../../data/profile';
           <div class="relative aspect-[4/5] overflow-hidden rounded-[1.15rem] bg-canvas-elevated">
             <img
               src="/images/profile.webp"
-              alt="Fotografía de Manuel Antonio Garcia Juárez"
+              alt="Fotografía de Manuel Antonio García Juárez"
               class="h-full w-full object-cover"
               width="640"
               height="800"

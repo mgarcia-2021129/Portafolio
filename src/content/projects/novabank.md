@@ -1,0 +1,57 @@
+﻿---
+name: Sistema Bancario NovaBank
+shortDescription: Plataforma bancaria con microservicios para administrar usuarios, cuentas, transacciones y cheques desde web y móvil.
+description: >-
+  NovaBank es una plataforma bancaria desarrollada bajo una arquitectura de microservicios
+  que permite administrar usuarios, cuentas bancarias, transacciones, cheques y
+  configuraciones financieras desde una aplicación web y móvil. El sistema implementa
+  autenticación centralizada con JWT, control de roles y comunicación entre servicios
+  para garantizar la seguridad y escalabilidad de la aplicación.
+cover: /images/projects/novabank/Novabank.webp
+gallery:
+  - /images/projects/novabank/Novabank1.webp
+  - /images/projects/novabank/Novabank7.webp
+  - /images/projects/novabank/Novabank9.webp
+  - /images/projects/novabank/Novabank13.webp
+  - /images/projects/novabank/Novabank14.webp
+  - /images/projects/novabank/Novabank15.webp
+  - /images/projects/novabank/Novabank18.webp
+tech:
+  - ASP.NET Core 8
+  - Entity Framework Core
+  - Node.js
+  - Fastify
+  - React
+  - Vite
+  - Tailwind CSS
+  - PostgreSQL
+  - MongoDB
+  - Docker
+  - JWT Authentication
+  - Swagger/OpenAPI
+  - Git
+status: Finalizado
+myRole: >-
+  Desarrollador Full Stack. Participé en el desarrollo de los servicios backend y frontend,
+  la integración entre microservicios y la implementación del panel administrativo.
+learned: >-
+  Trabajar en un sistema bancario me hizo comprender la importancia de mantener la integridad
+  de los datos en cada operación, especialmente en procesos como transferencias y movimientos
+  entre cuentas. También reforcé la importancia de coordinar el desarrollo entre varios
+  microservicios y el trabajo en equipo.
+features:
+  - Autenticación mediante JWT
+  - Registro e inicio de sesión
+  - Verificación y recuperación de correo electrónico
+  - Gestión de usuarios y roles
+  - Administración de cuentas bancarias
+  - Depósitos, retiros y transferencias
+  - Emisión y cobro de cheques
+  - Conversión entre monedas
+  - Dashboard administrativo
+  - Protección de rutas según permisos de usuario
+links:
+  repo: https://github.com/CCTEPT/Sistema_Bancario.git
+featured: true
+order: 1
+---
