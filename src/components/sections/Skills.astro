@@ -1,20 +1,24 @@
 ---
-import Reveal from '../react/Reveal';
-import SectionHeading from '../ui/SectionHeading.astro';
-import SkillsOrbit from '../react/SkillsOrbit';
 import { getCollection } from 'astro:content';
-
-const skillsEntry = (await getCollection('skills'))[0];
-if (!skillsEntry) throw new Error('Falta la entrada de contenido skills/skills.');
-const skills = skillsEntry.data.items;
+const entry = (await getCollection('skills'))[0];
+const groups = ['Lenguajes', 'Frameworks y plataformas', 'Bases de datos', 'Herramientas'];
 ---
-
-<section class="section-shell py-20 sm:py-28" id="habilidades" aria-labelledby="skills-titulo">
-  <Reveal client:load variant="mask">
-    <SectionHeading id="skills-titulo" title="Habilidades" />
-  </Reveal>
-
-  <Reveal client:load delay={0.12} variant="rise">
-    <SkillsOrbit client:load skills={skills} />
-  </Reveal>
-</section>
+<section class="tech" id="technologies" data-n="05 - Tecnologias"><div class="wrap">
+  <span class="sn mono"><b>05</b> / Tecnologias y herramientas</span><h2>Mi <em>stack</em></h2>
+  {groups.map((group) => <div class="grp"><span class="mono">{group}</span><ul>{(entry?.data.items ?? []).filter((skill) => skill.group === group).map((skill) => <li><span>{skill.name}</span><b>{skill.level}%</b><i class="skill-meter" style={`--v:${skill.level}%`}></i></li>)}</ul></div>)}
+</div></section>
+<script>
+  const mobileSkills = window.matchMedia('(max-width: 700px)');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const meters = [...document.querySelectorAll<HTMLElement>('.skill-meter')];
+  if (mobileSkills.matches && !reducedMotion.matches && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    }), { threshold: 0.4 });
+    meters.forEach((meter) => observer.observe(meter));
+  } else {
+    meters.forEach((meter) => meter.classList.add('is-visible'));
+  }
+</script>

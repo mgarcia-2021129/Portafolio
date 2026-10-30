@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import ContentPhoto from '../ui/ContentPhoto.astro';
+const activities = (await getCollection('activities')).sort((a, b) => a.data.order - b.data.order);
+const recognitions = (await getCollection('recognitions')).sort((a, b) => a.data.order - b.data.order);
+const contentImages = import.meta.glob<{ default: import('astro').ImageMetadata }>(
+  '../../assets/{recognitions,activities}/*.{jpeg,jpg,png,webp}',
+  { eager: true },
+);
+const imageFor = (name?: string) => name
+  ? Object.entries(contentImages).find(([path]) => path.endsWith(`/${name.split('/').at(-1)}`))?.[1].default
+  : undefined;
+---
+<section class="act" id="activities" data-n="06 - Reconocimientos"><div class="wrap">
+  <span class="sn mono"><b>06</b> / Reconocimientos</span><h2>Reconocimientos</h2>
+  {recognitions.map(({ data }) => { const image = imageFor(data.image); return <article class="recognition"><div class="recognition-copy"><h3>{data.name}</h3>{data.institution && <p>{data.institution}</p>}{data.date && <p>{data.date}</p>}{data.description && <p>{data.description}</p>}</div>{image && <ContentPhoto className="recognition-image" src={image} alt={`Fotografía del reconocimiento ${data.name}`} />}</article>; })}
+  {activities.length > 0 && <div class="activity-list"><h2>Actividades</h2>{activities.map(({ data }) => <article class="activity-entry"><div><h3>{data.name}</h3>{data.date && <p>{data.date}</p>}{data.description && <p>{data.description}</p>}{data.role && <p>Rol: {data.role}</p>}</div>{data.photos?.map((photo) => { const image = imageFor(photo); return image && <ContentPhoto className="activity-photo" src={image} alt={`Fotografia de ${data.name}`} sizes="(max-width:800px) 100vw, 30vw" />; })}</article>)}</div>}
+</div></section>

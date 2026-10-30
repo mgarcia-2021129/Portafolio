@@ -1,4 +1,11 @@
 ﻿---
+category: academic
+year: "2026"
+team: "Manuel Garcia, Emilio Cali, Roberto Catalán, Estuardo Chiti y Sebastián Peña"
+objective: >-
+  Gestionar digitalmente documentos escolares, como permisos, cartas, cartas de inasistencia y notas.
+problem: >-
+  la gestión presencial de solicitudes y documentos escolares puede requerir tiempo de estudiantes y personal para localizar docentes y completar el trámite.
 name: Kinal Reports
 shortDescription: Plataforma de microservicios para digitalizar procesos académicos y administrativos en Fundación Kinal.
 description: >-
@@ -7,13 +14,13 @@ description: >-
   Kinal. El sistema permite gestionar solicitudes de documentos, horarios, eventos,
   notificaciones, comunicación entre estudiantes y profesores, así como el seguimiento del
   estado de los docentes, reduciendo procesos manuales y mejorando la eficiencia institucional.
-cover: /images/projects/kinal-reports/KinalReports.webp
+cover: ../../assets/images/projects/KinalReports.webp
 gallery:
-  - /images/projects/kinal-reports/KinalReports1.webp
-  - /images/projects/kinal-reports/KinalReports2.webp
-  - /images/projects/kinal-reports/KinalReports3.webp
-  - /images/projects/kinal-reports/KinalReports5.webp
-  - /images/projects/kinal-reports/KinalReports7.webp
+  - ../../assets/images/projects/KinalReports1.webp
+  - ../../assets/images/projects/KinalReports2.webp
+  - ../../assets/images/projects/KinalReports3.webp
+  - ../../assets/images/projects/KinalReports5.webp
+  - ../../assets/images/projects/KinalReports7.webp
 tech:
   - Node.js
   - Fastify
@@ -27,7 +34,7 @@ tech:
   - Cloudinary
   - Postman
   - Git
-status: Finalizado
+status: Incompleto
 myRole: >-
   Desarrollador Full Stack. Participé en el desarrollo de la arquitectura basada en
   microservicios, la implementación de servicios backend y frontend, la integración del
@@ -50,8 +57,6 @@ features:
   - Consulta del estado y ubicación de docentes
   - Generación de reportes administrativos
   - Seguridad mediante validación de roles, rate limiting y protección de endpoints
-links:
-  repo: https://github.com/dsebastian-2021010/Kinal-Reports.git
 featured: true
 order: 2
 ---

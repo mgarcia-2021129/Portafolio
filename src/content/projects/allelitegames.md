@@ -1,4 +1,11 @@
 ﻿---
+category: academic
+year: "2026"
+team: "Alejandro Echeverría y Manuel Garcia"
+objective: >-
+  Desarrollar una tienda para la venta de videojuegos.
+problem: >-
+  Organizar en un sistema la gestión de productos y ventas de una tienda de videojuegos.
 name: AllEliteGames
 shortDescription: "Sistema MVC para la gestión integral de una tienda de videojuegos: productos, ventas, clientes y más."
 description: >-
@@ -7,10 +14,10 @@ description: >-
   operativos. La aplicación fue desarrollada bajo el patrón Modelo-Vista-Controlador (MVC),
   permitiendo optimizar la gestión diaria del negocio mediante un panel administrativo
   seguro y organizado.
-cover: /images/projects/allelitegames/home.webp
+cover: ../../assets/images/projects/home.webp
 gallery:
-  - /images/projects/allelitegames/01.webp
-  - /images/projects/allelitegames/02.webp
+  - ../../assets/images/projects/01.webp
+  - ../../assets/images/projects/02.webp
 tech:
   - Java 8
   - Java EE (Servlets y JSP)
@@ -48,8 +55,6 @@ features:
   - Registro de devoluciones
   - Validación de formularios del lado del servidor
   - Arquitectura MVC con separación entre vistas, controladores y acceso a datos
-links:
-  repo: https://github.com/aecheverria-2021222/AllEliteGames.git
 featured: true
 order: 3
 ---

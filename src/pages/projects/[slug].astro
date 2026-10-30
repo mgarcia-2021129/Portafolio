@@ -1,187 +1,44 @@
 ﻿---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Reveal from '../../components/react/Reveal';
-import ParallaxImage from '../../components/react/ParallaxImage';
-import GlassButton from '../../components/ui/GlassButton.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import { site } from '../../data/site';
-
+import { getProjectImage } from '../../data/projectImages';
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
-  return projects.map((project) => ({
-    params: { slug: project.slug },
-    props: { project },
-  }));
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
 }
-
 type Props = { project: CollectionEntry<'projects'> };
 const { project } = Astro.props as Props;
 const data = project.data;
-const pending = 'Pendiente';
-const categoryLabels = {
-  academic: 'Académico',
-  personal: 'Personal',
-  professional: 'Profesional / colaborativo',
-};
-const category = data.category ? categoryLabels[data.category] : pending;
-const gallery = data.gallery ?? [];
-const features = data.features ?? [];
-const technologies = data.tech ?? [];
+const allProjects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.data.order);
+const projectIndex = allProjects.findIndex((item)=>item.slug===project.slug);
+const previous = allProjects[(projectIndex - 1 + allProjects.length) % allProjects.length];
+const next = allProjects[(projectIndex + 1) % allProjects.length];
+const categoryNames = { academic:'Académico', personal:'Personal', professional:'Profesional / colaborativo' };
+const category = data.category ? categoryNames[data.category] : undefined;
+const cover = getProjectImage(data.cover);
+const gallery = (data.gallery ?? []).map(getProjectImage).filter((image): image is import('astro').ImageMetadata => Boolean(image));
+const fieldRows: [string, string | undefined][] = [
+  ['Objetivo', data.objective], ['Problema que resuelve', data.problem], ['Solución desarrollada', data.solution ?? data.description],
+].filter(([, value]) => Boolean(value));
+const infoRows: [string, string | undefined][] = [
+  ['Estado', data.status], ['Rol', data.myRole], ['Año', data.year], ['Equipo', data.team],
+].filter(([, value]) => Boolean(value));
 ---
-
-<BaseLayout
-  title={`${data.name} · ${site.shortName}`}
-  description={data.shortDescription}
->
-  <article class="section-shell pb-24 pt-28 sm:pb-32 sm:pt-36">
-    <Reveal client:load variant="rise">
-      <div class="mb-8">
-        <a href="/projects" class="text-sm text-ink/55 transition-colors hover:text-accent">
-          ← Volver a proyectos
-        </a>
-      </div>
-    </Reveal>
-
-    <Reveal client:load variant="zoom">
-      <div class="glass-panel overflow-hidden">
-        <ParallaxImage
-          client:load
-          src={data.cover}
-          alt={`Portada de ${data.name}`}
-          className="relative aspect-[16/9]"
-        />
-        <div class="relative z-10 space-y-5 p-6 sm:p-10">
-          <h1 class="font-display text-3xl font-bold tracking-tight text-ink sm:text-5xl text-balance">
-            {data.name}
-          </h1>
-          <p class="max-w-3xl text-base leading-relaxed text-ink/65 sm:text-lg">
-            {data.description}
-          </p>
-          <dl class="grid gap-3 text-sm text-ink/65 sm:grid-cols-2 lg:grid-cols-4">
-            <div><dt>Estado</dt><dd>{data.status ?? pending}</dd></div>
-            <div><dt>Categoría</dt><dd>{category}</dd></div>
-            <div><dt>Año</dt><dd>{data.year ?? pending}</dd></div>
-            <div><dt>Equipo</dt><dd>{data.team ?? pending}</dd></div>
-          </dl>
-          <div class="pt-2">
-            {data.links?.repo ? (
-              <GlassButton href={data.links.repo} external>Ver repositorio</GlassButton>
-            ) : (
-              <p>Repositorio: {pending}</p>
-            )}
-          </div>
-        </div>
-      </div>
-    </Reveal>
-
-    <div class="mt-8 grid gap-5 lg:grid-cols-2">
-      <Reveal client:load delay={0.1} variant="slide-left">
-        <section class="glass-panel h-full p-6 sm:p-8">
-          <div class="relative z-10">
-            <h2 class="font-display text-xl font-semibold text-ink">Mi rol</h2>
-            <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
-              {data.myRole ?? pending}
-            </p>
-          </div>
-        </section>
-      </Reveal>
-      <Reveal client:load delay={0.2} variant="slide-right">
-        <section class="glass-panel h-full p-6 sm:p-8">
-          <div class="relative z-10">
-            <h2 class="font-display text-xl font-semibold text-ink">Aprendí</h2>
-            <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
-              {data.learned ?? pending}
-            </p>
-          </div>
-        </section>
-      </Reveal>
-    </div>
-
-    <div class="mt-5 grid gap-5 lg:grid-cols-3">
-      <section class="glass-panel p-6 sm:p-8">
-        <h2 class="font-display text-xl font-semibold text-ink">Objetivo</h2>
-        <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">{data.objective ?? pending}</p>
-      </section>
-      <section class="glass-panel p-6 sm:p-8">
-        <h2 class="font-display text-xl font-semibold text-ink">Problema</h2>
-        <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">{data.problem ?? pending}</p>
-      </section>
-      <section class="glass-panel p-6 sm:p-8">
-        <h2 class="font-display text-xl font-semibold text-ink">Solución</h2>
-        <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">{data.solution ?? pending}</p>
-      </section>
-    </div>
-
-    <Reveal client:load delay={0.12} variant="rise">
-      <section class="glass-panel mt-5 p-6 sm:p-8">
-        <div class="relative z-10">
-          <h2 class="font-display text-xl font-semibold text-ink">Tecnologías</h2>
-          {technologies.length ? (
-            <ul class="mt-5 flex flex-wrap gap-2">
-              {technologies.map((tech) => (
-                <li class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm text-ink/80">
-                  {tech}
-                </li>
-              ))}
-            </ul>
-          ) : <p class="mt-4">{pending}</p>}
-        </div>
-      </section>
-    </Reveal>
-
-    <Reveal client:load delay={0.16} variant="rise">
-      <section class="glass-panel mt-5 p-6 sm:p-8">
-        <div class="relative z-10">
-          <h2 class="font-display text-xl font-semibold text-ink">Características principales</h2>
-          {features.length ? (
-            <ul class="mt-5 grid gap-3 sm:grid-cols-2">
-              {features.map((feature) => (
-                <li class="flex gap-3 text-sm leading-relaxed text-ink/70 sm:text-base">
-                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-          ) : <p class="mt-4">{pending}</p>}
-        </div>
-      </section>
-    </Reveal>
-
-    {data.architecture && (
-      <section class="glass-panel mt-5 p-6 sm:p-8">
-        <h2 class="font-display text-xl font-semibold text-ink">Arquitectura</h2>
-        <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">{data.architecture}</p>
-      </section>
-    )}
-
-    <section class="mt-10">
-      <h2 class="mb-5 font-display text-xl font-semibold text-ink">Galería</h2>
-      {gallery.length ? (
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {gallery.map((image, index) => (
-            <div class="glass-panel overflow-hidden p-2">
-              <ParallaxImage
-                client:load
-                src={image}
-                alt={`${data.name} — imagen ${index + 1}`}
-                className="aspect-[4/3] rounded-[1.05rem]"
-              />
-            </div>
-          ))}
-        </div>
-      ) : <p>{pending}</p>}
-    </section>
-
-    <section class="mt-8">
-      <h2 class="font-display text-xl font-semibold text-ink">Enlaces</h2>
-      <div class="mt-3 flex flex-wrap gap-4 text-sm">
-        {data.links?.live ? (
-          <a href={data.links.live} target="_blank" rel="noopener noreferrer">Proyecto</a>
-        ) : <span>Proyecto: {pending}</span>}
-        {data.links?.repo ? (
-          <a href={data.links.repo} target="_blank" rel="noopener noreferrer">Repositorio</a>
-        ) : <span>Repositorio: {pending}</span>}
-      </div>
-    </section>
-  </article>
+<BaseLayout title={`${data.name} — ${site.shortName}`} description={data.shortDescription}>
+  <section id="project-detail" data-n="Proyecto" style="padding-top:7rem"><div class="wrap" id="dv">
+    <a class="back mono" href="/projects">← Volver a proyectos</a>{category && <span class="mono" style="color:var(--cu);display:block">{category}</span>}
+    <h1 class="dt">{data.name}</h1><p class="dd">{data.shortDescription}</p>
+    {cover && <Image class="dh" src={cover} alt={`Captura de ${data.name}`} widths={[720,1080,1440]} sizes="100vw" fetchpriority="high" />}
+    {infoRows.length > 0 && <div class="info">{infoRows.map(([label, value]) => <div class="mono">{label}<b>{value}</b></div>)}</div>}
+    {fieldRows.map(([label, value], index) => <div class="ds"><h3>{String(index+2).padStart(2,'0')} · {label}</h3><div><p>{value}</p></div></div>)}
+    {data.features && data.features.length > 0 && <div class="ds"><h3>Funcionalidades</h3><div><ul class="f">{data.features.map((feature)=><li>{feature}</li>)}</ul></div></div>}
+    {data.tech && data.tech.length > 0 && <div class="ds"><h3>Tecnologías</h3><div>{data.tech.map((technology)=><span class="tc">{technology}</span>)}</div></div>}
+    {['novabank','kinal-reports','scoph'].includes(project.slug) && data.architecture && <div class="ds"><h3>Arquitectura</h3><div><p>{data.architecture}</p></div></div>}
+    {data.myRole && <div class="ds"><h3>Mi participación</h3><div><p>{data.myRole}</p>{data.learned && <p style="margin-top:1rem;color:#c3d0de">{data.learned}</p>}</div></div>}
+    {gallery.length > 0 && <div class="ds"><h3>Galería</h3><div class="gal">{gallery.map((image,index)=><Image src={image} alt={`Captura ${index+1} de ${data.name}`} widths={[360,640,960]} sizes="(max-width:700px) 100vw, 33vw" loading="lazy" />)}</div></div>}
+    {(data.links?.live || data.links?.repo) && <div class="ds"><h3>Enlaces</h3><div class="lk" style="margin:0">{data.links?.live && <a href={data.links.live} target="_blank" rel="noopener noreferrer">Ver proyecto</a>}{data.links?.repo && <a href={data.links.repo} target="_blank" rel="noopener noreferrer">Repositorio ↗</a>}</div></div>}
+    <div class="pn" role="navigation" aria-label="Proyectos"><a href={`/projects/${previous.slug}`}><span class="mono">← Anterior</span><h4>{previous.data.name}</h4></a><a href={`/projects/${next.slug}`}><span class="mono">Siguiente →</span><h4>{next.data.name}</h4></a></div>
+  </div></section>
 </BaseLayout>

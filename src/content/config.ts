@@ -123,7 +123,7 @@ export const collections = {
       ]),
       description: z.string().optional(),
       role: z.string().optional(),
-      photo: z.string().optional(),
+      photos: z.array(z.string()).optional(),
       order: z.number().int().nonnegative(),
     }),
   }),

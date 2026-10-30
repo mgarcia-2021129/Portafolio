@@ -1,14 +1,13 @@
 {
-    "fullName":  "Manuel Antonio García Juárez",
-    "role":  "Desarrollador Full Stack",
-    "location":  "Guatemala, Guatemala",
-    "tagline":  "Transformando ideas abstractas en sistemas reales, eficientes y funcionales.",
-    "welcomeLabel":  "Bienvenido.",
-    "intro":  "Este portafolio reúne mi trayectoria como desarrollador: cada proyecto es un reto superado y una oportunidad de aprendizaje. Me enfoco en soluciones eficientes, funcionales y bien diseñadas, con una actitud constante de mejora. Te invito a explorar mi trabajo y conocer lo que puedo aportar.",
-    "studying":  {
-                     "program":  "Perito en Informática",
-                     "year":  "Tercer año de diversificado",
-                     "institution":  "Centro Educativo Técnico Laboral Kinal"
-                 },
-    "yearsProgramming":  "Pendiente"
+  "fullName": "Manuel Antonio Garcia Juárez",
+  "role": "Desarrollador Full Stack",
+  "location": "Guatemala, Guatemala",
+  "tagline": "Transformando ideas abstractas en sistemas reales, eficientes y funcionales.",
+  "welcomeLabel": "Bienvenido.",
+  "intro": "Este portafolio reúne mi trayectoria como desarrollador: cada proyecto es un reto superado y una oportunidad de aprendizaje. Me enfoco en soluciones eficientes, funcionales y bien diseñadas, con una actitud constante de mejora. Te invito a explorar mi trabajo y conocer lo que puedo aportar.",
+  "studying": {
+    "program": "Perito en Informática",
+    "year": "Tercer año de diversificado",
+    "institution": "Centro Educativo Técnico Laboral Kinal"
+  }
 }

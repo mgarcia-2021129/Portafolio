@@ -1,4 +1,10 @@
 ﻿---
+year: "2026"
+team: "Emilio Cali, Roberto Catalán, Estuardo Chiti y Manuel Garcia"
+objective: >-
+  Reducir el tiempo que el personal de Scoph dedica a tareas administrativas y mejorar el control de horarios mediante un sistema centralizado.
+problem: >-
+  El personal gestionaba procesos en Excel y, en ocasiones, horarios en papel, lo que generaba desorganización y aumentaba el tiempo dedicado a tareas administrativas.
 name: Scoph
 shortDescription: Sistema de microservicios para optimizar la gestión de jornadas médicas, medicamentos y usuarios.
 category: professional
@@ -7,7 +13,7 @@ description: >-
   facilitando la administración de medicamentos, usuarios y procesos operativos durante
   cada jornada. El proyecto busca reducir la desorganización y mejorar el control de los
   recursos médicos mediante una plataforma centralizada basada en microservicios.
-cover: /images/projects/scoph/Scoph.webp
+cover: ../../assets/images/projects/Scoph.webp
 tech:
   - Node.js
   - Fastify
@@ -36,6 +42,7 @@ features:
   - API REST para la comunicación entre servicios
   - Desarrollo colaborativo bajo control de versiones
 links:
+  live: https://scoph.onrender.com/login
   repo: https://github.com/EmilioCali/Scoph-Gestor-Jornadas-Medicas.git
 featured: true
 order: 4

@@ -1,1 +1,6 @@
-{"key":"technology-interests","title":"Intereses en tecnología","order":6}
+{
+  "key": "technology-interests",
+  "title": "Intereses",
+  "order": 6,
+  "body": "Me apasiona la ciberseguridad y la programación; también me interesan la inteligencia artificial y el análisis de datos. Me atrae entender cómo se construyen los sistemas y cómo protegerlos."
+}

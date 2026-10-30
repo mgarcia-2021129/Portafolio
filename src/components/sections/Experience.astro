@@ -1,59 +1,9 @@
 ---
-import Reveal from '../react/Reveal';
-import SectionHeading from '../ui/SectionHeading.astro';
 import { getCollection } from 'astro:content';
-
-const experiences = (await getCollection('experience')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
-const pending = 'Pendiente';
+const entries = (await getCollection('experience')).sort((a, b) => a.data.order - b.data.order);
 ---
-
-<section class="section-shell py-20 sm:py-28" id="experiencia" aria-labelledby="exp-titulo">
-  <Reveal client:load variant="mask">
-    <SectionHeading id="exp-titulo" title="Experiencia" />
-  </Reveal>
-
-  <div class="grid gap-4 sm:grid-cols-2">
-    {
-      experiences.map(({ data }, index) => (
-        <Reveal client:load delay={0.14 * index} variant="card">
-          <article class="glass-panel h-full p-6">
-            <div class="relative z-10">
-              <p class="text-xs uppercase tracking-[0.16em] text-accent/80">
-                {data.kind === 'internship' ? 'Prácticas profesionales' : data.kind}
-              </p>
-              <p class="mt-3 font-display text-lg font-semibold leading-snug text-ink">
-                {data.org}
-              </p>
-              <dl class="mt-4 grid gap-2 text-sm text-ink/65">
-                <div>
-                  <dt class="inline">Cargo: </dt>
-                  <dd class="inline">{data.role ?? pending}</dd>
-                </div>
-                <div>
-                  <dt class="inline">Fechas: </dt>
-                  <dd class="inline">{data.dates ?? pending}</dd>
-                </div>
-                <div>
-                  <dt class="inline">Descripción: </dt>
-                  <dd class="inline">{data.description ?? pending}</dd>
-                </div>
-                <div>
-                  <dt class="inline">Responsabilidades: </dt>
-                  <dd class="inline">
-                    {data.responsibilities?.join(', ') ?? pending}
-                  </dd>
-                </div>
-                <div>
-                  <dt class="inline">Tecnologías: </dt>
-                  <dd class="inline">{data.tech?.join(', ') ?? pending}</dd>
-                </div>
-              </dl>
-            </div>
-          </article>
-        </Reveal>
-      ))
-    }
-  </div>
-</section>
+<section id="experience" data-n="03 - Experiencia" style="padding-top:0"><div class="wrap">
+  <span class="sn mono"><b>03</b> / Experiencia profesional</span><h2>Camino <em>recorrido</em></h2>
+  {entries.map(({ data }) => data.kind === 'internship' ? <article class="xp"><div class="mono" style="color:var(--cu)">Prácticas profesionales<br/><span style="color:var(--slate)">Práctica completada</span></div><div><h3>{data.org}</h3><dl>{data.role && <><dt>Rol</dt><dd>{data.role}</dd></>}{data.dates && <><dt>Fechas</dt><dd>{data.dates}</dd></>}{data.description && <><dt>Descripción</dt><dd>{data.description}</dd></>}{data.tech && data.tech.length > 0 && <><dt>Tecnologías</dt><dd>{data.tech.join(' · ')}</dd></>}</dl></div></article> : null)}
+  <article class="xp"><div class="mono" style="color:var(--cu)">Formacion academica<br/><span style="color:var(--slate)">No es empleo formal</span></div><div><h3>Proyectos y trabajos de desarrollo</h3><dl><dt>Institucion</dt><dd>Centro Educativo Tecnico Laboral Kinal</dd><dt>Rol</dt><dd>Desarrollador (proyectos durante la formacion)</dd><dt>Fechas</dt><dd>2024-2026</dd><dt>Descripcion</dt><dd><a href="/projects" style="border-bottom:1px solid var(--cu)">Ver proyectos</a></dd><dt>Tecnologias</dt><dd><a href="/#technologies" style="border-bottom:1px solid var(--cu)">Ver tecnologias</a></dd></dl></div></article>
+</div></section>

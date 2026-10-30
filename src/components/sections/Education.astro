@@ -1,39 +1,8 @@
 ---
-import Reveal from '../react/Reveal';
-import SectionHeading from '../ui/SectionHeading.astro';
 import { getCollection } from 'astro:content';
-
-const education = (await getCollection('education')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
-const pending = 'Pendiente';
+const entries = (await getCollection('education')).sort((a, b) => a.data.order - b.data.order);
 ---
-
-<section class="section-shell py-20 sm:py-28" id="educacion" aria-labelledby="edu-titulo">
-  <Reveal client:load variant="mask">
-    <SectionHeading id="edu-titulo" title="Educación" />
-  </Reveal>
-
-  <div class="relative space-y-5 before:absolute before:bottom-4 before:left-[1.15rem] before:top-4 before:w-px before:bg-gradient-to-b before:from-accent/50 before:via-glass-edge before:to-transparent sm:before:left-[1.35rem]">
-    {
-      education.map(({ data }, index) => (
-        <Reveal client:load delay={0.14 * index} variant="slide-left">
-          <article class="relative grid gap-4 sm:grid-cols-[2.7rem_1fr] sm:gap-6">
-            <div class="relative z-10 mt-6 hidden h-3 w-3 rounded-full bg-accent shadow-glow sm:block" />
-            <div class="glass-panel p-6 sm:p-8">
-              <div class="relative z-10">
-                <h3 class="font-display text-xl font-semibold text-ink">{data.stage}</h3>
-                <p class="mt-2 text-sm text-ink/55">
-                  {data.institution} · {data.program ?? pending} · {data.dates ?? pending}
-                </p>
-                <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
-                  {data.description ?? pending}
-                </p>
-              </div>
-            </div>
-          </article>
-        </Reveal>
-      ))
-    }
-  </div>
-</section>
+<section id="education" data-n="07 - Educacion"><div class="wrap">
+  <span class="sn mono"><b>07</b> / Educacion</span><h2>Como <em>aprendi</em></h2>
+  <div class="tl">{entries.map(({ data }) => <article><h3>{data.stage}</h3><p class="mono" style="margin-bottom:.5rem">{data.program ? `${data.program} - ` : ''}{data.institution}{data.dates ? ` - ${data.dates}` : ''}</p>{data.description && <p>{data.description}</p>}</article>)}</div>
+</div></section>

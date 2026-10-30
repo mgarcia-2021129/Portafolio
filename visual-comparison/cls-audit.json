@@ -1,0 +1,9 @@
+﻿[
+  {"width":320,"route":"/","cls":0},{"width":320,"route":"/projects","cls":0},{"width":320,"route":"/projects/novabank","cls":0},
+  {"width":375,"route":"/","cls":0},{"width":375,"route":"/projects","cls":0},{"width":375,"route":"/projects/novabank","cls":0},
+  {"width":390,"route":"/","cls":0},{"width":390,"route":"/projects","cls":0},{"width":390,"route":"/projects/novabank","cls":0},
+  {"width":768,"route":"/","cls":0},{"width":768,"route":"/projects","cls":0},{"width":768,"route":"/projects/novabank","cls":0},
+  {"width":1024,"route":"/","cls":0},{"width":1024,"route":"/projects","cls":0},{"width":1024,"route":"/projects/novabank","cls":0},
+  {"width":1440,"route":"/","cls":0},{"width":1440,"route":"/projects","cls":0},{"width":1440,"route":"/projects/novabank","cls":0},
+  {"width":1920,"route":"/","cls":0},{"width":1920,"route":"/projects","cls":0},{"width":1920,"route":"/projects/novabank","cls":0}
+]

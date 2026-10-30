@@ -2,6 +2,7 @@
 institution: Centro Educativo Técnico Laboral Kinal
 program: Perito en Informática
 stage: 6to. Diversificado
+dates: "2026"
 order: 5
 description: >-
   Consolidé el desarrollo de aplicaciones web modernas: APIs REST y microservicios

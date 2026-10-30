@@ -1,38 +1,34 @@
-﻿---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Reveal from '../../components/react/Reveal';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
-import ProjectCard from '../../components/projects/ProjectCard.astro';
-import { getCollection } from 'astro:content';
-import { site } from '../../data/site';
-
-const projects = (await getCollection('projects')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
 ---
-
-<BaseLayout
-  title={`Proyectos · ${site.shortName}`}
-  description="Todos los proyectos de Manuel Antonio García Juárez: sistemas bancarios, plataformas académicas, gestión comercial y salud."
->
-  <section class="section-shell pb-24 pt-28 sm:pb-32 sm:pt-36">
-    <Reveal client:load variant="mask">
-      <SectionHeading title="Proyectos" />
-    </Reveal>
-
-    <div class="grid gap-5 lg:grid-cols-2">
-      {
-        projects.map((project, index) => (
-          <Reveal client:load delay={0.14 * index} variant="zoom">
-            <ProjectCard
-              href={`/projects/${project.slug}`}
-              title={project.data.name}
-              description={project.data.shortDescription}
-              image={project.data.cover}
-            />
-          </Reveal>
-        ))
-      }
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { site } from '../../data/site';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const assets = import.meta.glob<{ default: import('astro').ImageMetadata }>('../../assets/images/projects/**/*.{webp,jpg,jpeg,png}', { eager: true });
+const imageFor = (path: string) => Object.entries(assets).find(([key]) => key.endsWith(`/${path.split('/').at(-1)}`))?.[1].default;
+const categoryKey = { academic: 'ac', personal: 'pe', professional: 'pro' };
+const categoryLabel = { academic: 'Academicos', personal: 'Personales', professional: 'Profesionales' };
+const hasPersonalProjects = projects.some(({ data }) => data.category === 'personal');
+const filters = [['all','Todos'],['ac','Academicos'], ...(hasPersonalProjects ? [['pe','Personales']] : []), ['pro','Profesionales']];
+---
+<BaseLayout title={`Proyectos - ${site.shortName}`} description="Proyectos seleccionados de Manuel Antonio Garcia Juárez.">
+  <section id="projects" data-n="Proyectos" style="padding-top:8rem"><div class="wrap">
+    <span class="sn mono"><b>P</b> / Todos los proyectos</span><h1 class="page-title">Proyectos</h1>
+    <div class="fl" id="fl" aria-label="Filtrar proyectos">
+      {filters.map(([key, label], index) => <button type="button" aria-pressed={index === 0} data-k={key}>{label}</button>)}
     </div>
-  </section>
+    <div id="pl">{projects.map((project, index) => { const image = imageFor(project.data.cover); const category = project.data.category ? categoryKey[project.data.category] : ''; const label = project.data.category ? categoryLabel[project.data.category] : ''; const links = project.data.links; return <article class="pf" data-project-category={category}><a class="im" href={`/projects/${project.slug}`} tabindex="-1" aria-hidden="true">{image && <Image src={image} alt="" widths={[480,720,960]} sizes="(max-width:800px) 100vw, 58vw" loading="lazy" />}</a><div class="tx">{(label || project.data.year) && <span class="mono" style="color:var(--cu)">{String(index+1).padStart(2,'0')}{label && ` · ${label}`}{project.data.year && ` · ${project.data.year}`}</span>}<h3><a href={`/projects/${project.slug}`}>{project.data.name}</a></h3><p>{project.data.shortDescription}</p>{Boolean(project.data.tech?.length) && <div>{project.data.tech!.slice(0,6).map((technology)=><span class="tc">{technology}</span>)}{project.data.tech!.length>6 && <span class="tc">+{project.data.tech!.length-6}</span>}</div>}<div class="lk"><a href={`/projects/${project.slug}`}>Ver detalle</a>{links?.live && <a href={links.live} target="_blank" rel="noopener noreferrer">Ver proyecto</a>}{links?.repo && <a href={links.repo} target="_blank" rel="noopener noreferrer">Repositorio</a>}</div></div></article>; })}</div>
+  </div></section>
+  <script is:inline>
+    const filterButtons = [...document.querySelectorAll('#fl button')];
+    const projectCards = [...document.querySelectorAll('[data-project-category]')];
+    filterButtons.forEach((button) => button.addEventListener('click', () => {
+      filterButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+      projectCards.forEach((card) => {
+        const hidden = button.dataset.k !== 'all' && card.dataset.projectCategory !== button.dataset.k;
+        card.hidden = hidden;
+        card.style.display = hidden ? 'none' : '';
+      });
+    }));
+  </script>
 </BaseLayout>

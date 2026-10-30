@@ -1,9 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 
+const siteUrl = process.env.SITE_URL ?? 'https://portafolio-roan-pi-79.vercel.app';
+
 export default defineConfig({
+  site: siteUrl,
   redirects: {
     '/proyectos': '/projects',
     '/proyectos/[slug]': '/projects/[slug]',
@@ -13,13 +15,10 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: 'viewport',
   },
-  integrations: [react(), tailwind({ applyBaseStyles: false })],
+  integrations: [tailwind({ applyBaseStyles: false })],
   vite: {
     build: {
       cssMinify: true,
-    },
-    ssr: {
-      noExternal: ['framer-motion'],
     },
   },
 });

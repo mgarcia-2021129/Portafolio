@@ -1,83 +1,19 @@
 ---
-import Reveal from '../react/Reveal';
-import GlassButton from '../ui/GlassButton.astro';
 import { getEntry } from 'astro:content';
-
-const profileEntry = await getEntry('profile', 'site');
-if (!profileEntry) throw new Error('Falta la entrada de contenido profile/site.');
-const profile = profileEntry.data;
+import { Image } from 'astro:assets';
+import portrait from '../../assets/images/profile.jpeg';
+const entry = await getEntry('profile', 'site');
+if (!entry) throw new Error('Falta profile/site');
+const profile = entry.data;
+const nameParts = profile.fullName.split(' ');
+const firstLine = nameParts.slice(0, 2).join(' ');
+const secondLine = nameParts.slice(2).join(' ');
 ---
-
-<section class="section-shell relative pb-20 pt-28 sm:pb-28 sm:pt-36" id="inicio" aria-labelledby="hero-name">
-  <div class="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-    <div class="space-y-7">
-      <Reveal client:load variant="mask" delay={0.05}>
-        <p class="text-sm font-medium uppercase tracking-[0.2em] text-accent/90">
-          {profile.welcomeLabel}
-        </p>
-      </Reveal>
-      <Reveal client:load variant="mask" delay={0.15}>
-        <h1
-          id="hero-name"
-          class="font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl text-balance"
-        >
-          {profile.fullName}
-        </h1>
-      </Reveal>
-      <Reveal client:load variant="rise" delay={0.28}>
-        <p class="max-w-xl font-display text-xl font-medium text-ink/80 sm:text-2xl text-balance">
-          {profile.tagline}
-        </p>
-      </Reveal>
-      <Reveal client:load variant="rise" delay={0.4}>
-        <p class="max-w-xl text-base leading-relaxed text-ink/60 sm:text-lg">
-          {profile.intro}
-        </p>
-      </Reveal>
-      <Reveal client:load variant="rise" delay={0.52}>
-        <div class="flex flex-wrap gap-3 pt-2">
-          <GlassButton href="/projects">Ver proyectos</GlassButton>
-          <GlassButton href="/#contacto" variant="ghost">Contactar</GlassButton>
-        </div>
-      </Reveal>
-    </div>
-
-    <Reveal client:load variant="zoom" delay={0.2}>
-      <div class="relative mx-auto w-full max-w-md">
-        <div class="absolute -inset-6 rounded-full bg-accent/10 blur-3xl" aria-hidden="true"></div>
-        <div class="glass-panel relative overflow-hidden p-3">
-          <div class="relative aspect-[4/5] overflow-hidden rounded-[1.15rem] bg-canvas-elevated">
-            <img
-              src="/images/profile.webp"
-              alt="Fotografía de Manuel Antonio García Juárez"
-              class="h-full w-full object-cover"
-              width="640"
-              height="800"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-            />
-            <div
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-canvas/50 via-transparent to-white/5"
-            >
-            </div>
-          </div>
-          <div class="relative z-10 mt-4 flex items-center justify-between px-2 pb-1">
-            <div>
-              <p class="text-xs uppercase tracking-[0.16em] text-ink/45">Rol</p>
-              <p class="mt-1 font-display text-sm font-semibold text-ink">
-                {profile.role}
-              </p>
-            </div>
-            <div class="text-right">
-              <p class="text-xs uppercase tracking-[0.16em] text-ink/45">Ubicación</p>
-              <p class="mt-1 font-display text-sm font-semibold text-ink">
-                {profile.location}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Reveal>
+<header class="hero" data-n="01 · Presentación"><div class="wrap">
+  <h1 class="name" id="nm"><span class="ln" data-split>{firstLine}</span><span class="ln" data-split>{secondLine}</span></h1>
+  <div class="ph"><div class="dial" id="dial"></div><div class="dot" id="dot" aria-hidden="true"></div>
+    <Image src={portrait} alt="Fotografía de Manuel Antonio Garcia Juárez" widths={[240,340,480]} sizes="(max-width:800px) 240px, 340px" loading="eager" fetchpriority="high" />
   </div>
-</section>
+  <div class="meta"><div class="cta"><span class="mono">{profile.role}</span><a class="p" href="/projects">Explorar proyectos <span aria-hidden="true">↓</span></a><a href="#contact">Contactar →</a></div><p>{profile.intro}</p></div>
+  <div class="clock mono">Guatemala · <span id="ck">--:--</span> <span style="color:var(--cu)">●</span></div>
+</div></header>

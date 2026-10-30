@@ -2,6 +2,7 @@
 institution: Centro Educativo Técnico Laboral Kinal
 program: Perito en Informática
 stage: 4to. Diversificado
+dates: "2024"
 order: 3
 description: >-
   Adquirí las bases del área de informática, con conocimientos en IT Essentials y

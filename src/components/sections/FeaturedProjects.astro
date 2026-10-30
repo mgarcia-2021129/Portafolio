@@ -1,37 +1,12 @@
----
-import Reveal from '../react/Reveal';
-import SectionHeading from '../ui/SectionHeading.astro';
-import ProjectCard from '../projects/ProjectCard.astro';
-import GlassButton from '../ui/GlassButton.astro';
+﻿---
 import { getCollection } from 'astro:content';
-
-const featured = (await getCollection('projects', ({ data }) => data.featured)).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+import { Image } from 'astro:assets';
+const projects = (await getCollection('projects', ({ data }) => data.featured)).sort((a, b) => a.data.order - b.data.order);
+const images = import.meta.glob<{ default: import('astro').ImageMetadata }>('../../assets/images/projects/**/*.{webp,jpg,jpeg,png}', { eager: true });
+const imageFor = (path: string) => Object.entries(images).find(([key]) => key.endsWith(`/${path.split('/').at(-1)}`))?.[1].default;
 ---
-
-<section class="section-shell py-20 sm:py-28" id="proyectos" aria-labelledby="proy-titulo">
-  <div class="mb-10 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-    <Reveal client:load variant="mask">
-      <SectionHeading id="proy-titulo" title="Proyectos destacados" />
-    </Reveal>
-    <Reveal client:load variant="rise" delay={0.15}>
-    <GlassButton href="/projects">Ver todos</GlassButton>
-    </Reveal>
-  </div>
-
-  <div class="grid gap-5 sm:grid-cols-2">
-    {
-      featured.map((project, index) => (
-        <Reveal client:load delay={0.14 * index} variant="zoom">
-          <ProjectCard
-              href={`/projects/${project.slug}`}
-              title={project.data.name}
-              image={project.data.cover}
-            compact
-          />
-        </Reveal>
-      ))
-    }
-  </div>
-</section>
+<section id="featured" data-n="04 · Proyectos" style="padding-top:0"><div class="wrap">
+  <span class="sn mono"><b>04</b> / Proyectos destacados</span><h2>Trabajo <em>seleccionado</em></h2>
+  <div class="pj">{projects.map((project, index) => { const image = imageFor(project.data.cover); return <a class="pr" href={`/projects/${project.slug}`} data-preview-row><span class="n mono">{String(index + 1).padStart(2, '0')}</span><div><h3>{project.data.name}</h3><small>{project.data.subtitle ?? project.data.shortDescription}</small></div><span class="go">Ver proyecto →</span>{image && <Image class="th" src={image} alt={`Captura de ${project.data.name}`} widths={[300]} sizes="300px" loading="lazy" />}</a>; })}</div>
+  <p style="margin-top:2rem"><a class="mono" style="color:var(--cu);border-bottom:1px solid var(--cu)" href="/projects">Ver todos los proyectos →</a></p>
+</div></section>

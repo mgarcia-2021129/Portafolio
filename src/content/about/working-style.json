@@ -1,1 +1,6 @@
-{"key":"working-style","title":"Mi forma de trabajar","order":4}
+{
+  "key": "working-style",
+  "title": "Mi forma de trabajar",
+  "order": 4,
+  "body": "Soy proactivo: me anticipo a los problemas, propongo soluciones y no espero a que me indiquen cada paso. Trabajo bien en equipo, comunico con claridad y busco entregar sistemas funcionales y ordenados."
+}

@@ -2,6 +2,7 @@
 institution: Centro Educativo Técnico Laboral Kinal
 program: Perito en Informática
 stage: 5to. Diversificado
+dates: "2025"
 order: 4
 description: >-
   Profundicé en el diseño y administración de bases de datos relacionales con

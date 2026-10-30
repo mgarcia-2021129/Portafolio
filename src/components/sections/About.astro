@@ -1,42 +1,12 @@
 ---
-import Reveal from '../react/Reveal';
-import SectionHeading from '../ui/SectionHeading.astro';
 import { getCollection, getEntry } from 'astro:content';
-
-const [profileEntry, aboutEntries] = await Promise.all([
-  getEntry('profile', 'site'),
-  getCollection('about'),
-]);
-if (!profileEntry) throw new Error('Falta la entrada de contenido profile/site.');
-const cards = aboutEntries
-  .sort((a, b) => a.data.order - b.data.order)
-  .map(({ data }) => data);
+const [about, profileEntry] = await Promise.all([getCollection('about'), getEntry('profile', 'site')]);
+about.sort((a, b) => a.data.order - b.data.order);
+const profile = profileEntry?.data;
 ---
-
-<section class="section-shell py-20 sm:py-28" id="sobre-mi" aria-labelledby="sobre-titulo">
-  <Reveal client:load variant="mask">
-    <SectionHeading id="sobre-titulo" eyebrow="Sobre mí" title={profileEntry.data.role} />
-  </Reveal>
-
-  <div class="grid gap-5 lg:grid-cols-3">
-    {
-      cards.map((card, index) => (
-        <Reveal
-          client:load
-          delay={0.15 * index}
-          variant={index === 0 ? 'slide-left' : index === 2 ? 'slide-right' : 'card'}
-        >
-          <article class="glass-panel h-full p-6 sm:p-7">
-            <div class="relative z-10">
-              <div class="mb-5 h-px w-12 bg-gradient-to-r from-accent to-transparent" />
-              <h3 class="font-display text-xl font-semibold text-ink">{card.title}</h3>
-              <p class="mt-4 text-sm leading-relaxed text-ink/65 sm:text-base">
-                {card.body ?? 'Pendiente'}
-              </p>
-            </div>
-          </article>
-        </Reveal>
-      ))
-    }
-  </div>
-</section>
+<section class="about" id="about" data-n="02 · Sobre mí"><div class="wrap">
+  <span class="sn mono"><b>02</b> / Sobre mí</span><h2>Desarrollador y <em>persona</em></h2>
+  {profile?.tagline && <p class="pq">{profile.tagline}</p>}
+  <div class="rows">{about.filter(({ data }) => data.body).map(({ data }) => <div class="rw"><h3>{data.title}</h3><p class="rv">{data.body}</p></div>)}</div>
+  {(profile?.location || profile?.studying.program) && <div class="facts">{profile.location && <div class="mono">Ubicación<b>{profile.location}</b></div>}{profile.studying.program && <div class="mono">Título<b>{profile.studying.program}</b></div>}</div>}
+</div></section>

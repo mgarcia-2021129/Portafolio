@@ -1,4 +1,11 @@
 ﻿---
+category: academic
+year: "2026"
+team: "Roberto Catalán, Emilio Cali, Estuardo Chiti y Manuel Garcia"
+objective: >-
+  Desarrollar un sistema bancario académico para gestionar usuarios, cuentas y transacciones mediante una arquitectura de microservicios.
+problem: >-
+  diseñar una aplicación que organice operaciones bancarias y mantenga sus datos coordinados entre servicios.
 name: Sistema Bancario NovaBank
 shortDescription: Plataforma bancaria con microservicios para administrar usuarios, cuentas, transacciones y cheques desde web y móvil.
 description: >-
@@ -7,15 +14,15 @@ description: >-
   configuraciones financieras desde una aplicación web y móvil. El sistema implementa
   autenticación centralizada con JWT, control de roles y comunicación entre servicios
   para garantizar la seguridad y escalabilidad de la aplicación.
-cover: /images/projects/novabank/Novabank.webp
+cover: ../../assets/images/projects/Novabank.webp
 gallery:
-  - /images/projects/novabank/Novabank1.webp
-  - /images/projects/novabank/Novabank7.webp
-  - /images/projects/novabank/Novabank9.webp
-  - /images/projects/novabank/Novabank13.webp
-  - /images/projects/novabank/Novabank14.webp
-  - /images/projects/novabank/Novabank15.webp
-  - /images/projects/novabank/Novabank18.webp
+  - ../../assets/images/projects/Novabank1.webp
+  - ../../assets/images/projects/Novabank7.webp
+  - ../../assets/images/projects/Novabank9.webp
+  - ../../assets/images/projects/Novabank13.webp
+  - ../../assets/images/projects/Novabank14.webp
+  - ../../assets/images/projects/Novabank15.webp
+  - ../../assets/images/projects/Novabank18.webp
 tech:
   - ASP.NET Core 8
   - Entity Framework Core
@@ -51,6 +58,7 @@ features:
   - Dashboard administrativo
   - Protección de rutas según permisos de usuario
 links:
+  live: https://novabank-nine-rosy.vercel.app/
   repo: https://github.com/CCTEPT/Sistema_Bancario.git
 featured: true
 order: 1
